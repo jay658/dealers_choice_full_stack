@@ -5,6 +5,17 @@ const { db, Game } = require('./db');
 
 app.use('/dist', express.static(path.join(__dirname, 'dist')));
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, 'index.html')));
+app.use(express.json())
+
+app.delete('/api/games/:id', async(req, res, next)=>{
+    try{
+        const toDestroy = await Game.findByPk(req.params.id)
+        await toDestroy.destroy()
+        res.sendStatus(204)
+    }catch(err){
+        next(err)
+    }
+})
 
 app.get('/api/games', async(req, res, next)=>{
     try{
