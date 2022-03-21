@@ -17,6 +17,15 @@ app.delete('/api/games/:id', async(req, res, next)=>{
     }
 })
 
+app.get('/api/games/:id', async(req, res, next)=>{
+    try{
+        const game = await Game.findByPk(req.params.id)
+        res.send(game)
+    }catch(ex){
+        next(ex)
+    }
+})
+
 app.get('/api/games', async(req, res, next)=>{
     try{
         res.send(await Game.findAll())

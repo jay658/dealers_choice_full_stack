@@ -1,19 +1,42 @@
-import {createStore, applyMiddleware} from 'redux'
+import {createStore, applyMiddleware, combineReducers} from 'redux'
 import thunk from 'redux-thunk'
 import axios from 'axios'
 
 const LOAD_GAMES = 'LOAD_GAMES'
 const DELETE_GAME = 'DELETE_GAME'
+const LOAD_SINGLE_GAME = 'LOAD_SINGLE_GAME'
 
-function reducer(state = [], action){
+function gamesState(state = [], action){
     if(action.type === LOAD_GAMES){
         state = action.games
     }
     if(action.type === DELETE_GAME){
-        console.log(action)
         state = state.filter(game => game.id !== action.game.id)
     }
     return state
+}
+
+function gameState(state = {}, action){
+    if(action.type === LOAD_SINGLE_GAME){
+        state = action.game
+    }
+    return state
+}
+
+const reducer = combineReducers({
+    gamesState,
+    gameState
+})
+
+export const loadSingleGame = (id)=>{
+    return async(dispatch)=>{
+        const response = await axios.get(`/api/games/${id}`)
+        const game = response.data
+        dispatch({
+            type:LOAD_SINGLE_GAME,
+            game:game
+        })
+    }
 }
 
 export const loadGames = () =>{
