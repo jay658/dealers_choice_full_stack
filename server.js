@@ -9,9 +9,7 @@ app.use(express.json())
 
 app.post('/api/games', async(req, res, next)=>{
     try{
-        console.log(req.body)
         const game = await Game.create({name:req.body.name, genre:req.body.genre})
-        console.log(game)
         res.send(game)
     }catch(err){
         next(err)
