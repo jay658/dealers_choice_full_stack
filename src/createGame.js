@@ -32,6 +32,7 @@ class _CreateGame extends React.Component{
                 <form onSubmit ={handleSubmit}>
                     <input placeholder = "Game name"  name = 'name' value = {name} onChange = {handleChange}/>
                     <select name = 'genre' onChange = {handleChange}>
+                        <option value = ''>Select Genre</option>
                         <option value = 'fps'>fps</option>
                         <option value = 'moba'>moba</option>
                         <option value = 'rpg'>rpg</option>
