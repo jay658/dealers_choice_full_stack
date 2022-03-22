@@ -11,7 +11,7 @@ const _Games = (props)=>{
             {games.map(game=>{
                 return(
                     <div key = {game.id}>
-                        <li><Link to = {`/game/${game.id}`} >{game.name}</Link> is a {game.genre} game</li>
+                        <li><Link to = {`/games/${game.id}`} >{game.name}</Link> is a {game.genre} game</li>
                         <button onClick = {()=>destroy(game)}>Delete Game </button>
                     </div>
                 )

@@ -5,6 +5,7 @@ import axios from 'axios'
 const LOAD_GAMES = 'LOAD_GAMES'
 const DELETE_GAME = 'DELETE_GAME'
 const LOAD_SINGLE_GAME = 'LOAD_SINGLE_GAME'
+const CREATE_GAME = 'CREATE_GAME'
 
 function gamesState(state = [], action){
     if(action.type === LOAD_GAMES){
@@ -12,6 +13,9 @@ function gamesState(state = [], action){
     }
     if(action.type === DELETE_GAME){
         state = state.filter(game => game.id !== action.game.id)
+    }
+    if(action.type === CREATE_GAME){
+        state = [...state, action.game]
     }
     return state
 }
@@ -27,6 +31,18 @@ const reducer = combineReducers({
     gamesState,
     gameState
 })
+
+export const createGame = (game, history)=>{
+    return async(dispatch)=>{
+        const response = await axios.post('/api/games', game)
+        const newGame = response.data
+        dispatch({
+            type: CREATE_GAME,
+            game:newGame
+        })
+        history.push(`/games/${newGame.id}`)
+    }
+}
 
 export const loadSingleGame = (id)=>{
     return async(dispatch)=>{

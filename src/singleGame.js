@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {loadSingleGame} from './store'
 
 
-class _singleGame extends React.Component{
+class _SingleGame extends React.Component{
     componentDidMount(){
         this.props.loadSingle(this.props.match.params.id)
     } 
@@ -13,6 +13,7 @@ class _singleGame extends React.Component{
         const game = this.props.gameState
         return(
             <div>
+                <h1>{game.name}</h1>
                 {game.name} is a {game.genre} game
             </div>
         )
@@ -21,12 +22,12 @@ class _singleGame extends React.Component{
 
 const mapDispatchToProps = (dispatch)=>{
     return{
-        loadSingle: (game)=>{
-            dispatch(loadSingleGame(game))
+        loadSingle: (id)=>{
+            dispatch(loadSingleGame(id))
         }
     }
 }
 
-const singleGame = connect(state=>state, mapDispatchToProps)(_singleGame)
+const SingleGame = connect(state=>state, mapDispatchToProps)(_SingleGame)
 
-export default singleGame
+export default SingleGame

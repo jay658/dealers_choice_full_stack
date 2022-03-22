@@ -4,7 +4,9 @@ import {Provider, connect} from 'react-redux'
 import store, { loadGames } from './store';
 import Games from './games'
 import { HashRouter, Route, Link} from 'react-router-dom';
-import singleGame from './singleGame'
+import SingleGame from './singleGame'
+import CreateGame from './createGame'
+
 
 class _App extends React.Component{
     componentDidMount(){
@@ -14,12 +16,18 @@ class _App extends React.Component{
         return(
             <div>
                 <h1>Games</h1>
-                <Link to="/games">Show Games</Link>
-                <Link to="/">Don't Show Games</Link>
-                <Link to ="/game/create">Create a game</Link>
+                <div>
+                    <Link to="/games">Show All Games</Link>
+                </div>
+                <div>
+                    <Link to="/">Hide Games</Link>
+                </div>
+                <div>
+                    <Link to = '/game/create'>Create a game</Link>
+                </div>
                 <Route component ={Games} exact path = "/games"/>
-                <Route component ={singleGame} exact path = "/game/:id"/>
-                <Route component ={singleGame} exact path = "/game/create"/>
+                <Route component ={CreateGame} exact path = "/game/create"/>
+                <Route component ={SingleGame} exact path = "/games/:id"/>
             </div>
         )
     }

@@ -7,6 +7,17 @@ app.use('/dist', express.static(path.join(__dirname, 'dist')));
 app.get('/', (req, res)=> res.sendFile(path.join(__dirname, 'index.html')));
 app.use(express.json())
 
+app.post('/api/games', async(req, res, next)=>{
+    try{
+        console.log(req.body)
+        const game = await Game.create({name:req.body.name, genre:req.body.genre})
+        console.log(game)
+        res.send(game)
+    }catch(err){
+        next(err)
+    }
+})
+
 app.delete('/api/games/:id', async(req, res, next)=>{
     try{
         const toDestroy = await Game.findByPk(req.params.id)
@@ -32,6 +43,11 @@ app.get('/api/games', async(req, res, next)=>{
     }catch(err){
         next(err)
     }
+})
+
+app.use((err, req, res, next)=>{
+    console.log(err)
+    res.status(err.status||500).send(err)
 })
 
 const setUp = async() => {
